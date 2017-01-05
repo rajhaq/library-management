@@ -1,30 +1,67 @@
+<?php
+// Start the session
+session_start();
+?>
 <?php include 'header.php';?>
-<title>Welcome | Login Page</title>
-</head>
+	<?php include 'head.php';?>
+		<?php include 'config.php';?>
+<?php		
+	
+	
+	$sql="SELECT usr_email FROM lib_users";
+	$testmail = mysqli_query($con, $sql);
 
-<body>
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span4 offset4">
-          <div class="signin">
-            <h2 class="center-align-text">User Login</h2>
-            <form action="login.php" class="signin-wrapper" method="post">
-              <div class="content">
-                <input class="input input-block-level" name="email" placeholder="Email" type="email" value="">
-                <input class="input input-block-level" name="password" placeholder="Password" type="password">
-              </div>
-              <div class="actions">
-                <input class="btn btn-info pull-right" type="submit" value="Login">
-                <span class="checkbox-wrapper">
-                  <a href="forget.php" class="pull-left">Forgot Password</a>
-                </span>
-                <div class="clearfix"></div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+		if(!$testmail)
+		{
+		  die('<h2>Error: '.mysqli_error($con).'</h2>');
+		}
 
-</body>
+	$flag=0;
+	while($row = mysqli_fetch_assoc($testmail))
+	{
+		if($_POST['email']==$row['usr_email'])
+		{
+			$flag=1;
+			break;
+		}
+	}
+	if($flag==1)
+	{
+
+	$sql_password="SELECT usr_password, usr_role FROM lib_users WHERE usr_email='$_POST[email]'";
+	if(!mysqli_query($con,$sql_password))
+		{
+		  die('<h2>Error: '.mysqli_error($con).'</h2>');
+		}
+
+	$result = mysqli_query($con, $sql_password);
+	$row=mysqli_fetch_assoc($result);
+	if(md5($_POST['password'])==$row['usr_password'])
+	{
+		if($row["usr_role"]==1)
+		{
+			$_SESSION["user_mail"] = $_POST["email"];
+			header("Location: member.php");  
+	
+		}
+		else if($row["usr_role"]==2)
+		{
+			$_SESSION["admin_mail"] = $_POST["email"];
+			header("Location: admin.php");  
+	
+		}
+			
+	}
+	
+	else
+		header('Location: index.php?error=1');
+
+	}
+	else
+		header('Location: index.php?error=2');
+	
+?>
+	
+	
+	
 <?php include 'footer.php';?>
