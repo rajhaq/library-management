@@ -68,7 +68,7 @@
 					Shelf column
 				  </label>
 				  <div class="controls">
-					<input type="text" name="shelf_column" id="shelf_column" class="span12" placeholder=""  />
+					<input type="text" name="shelf_column" id="shelf_cloumn" class="span12" placeholder=""  />
 				  </div>
 				</div>
 				
