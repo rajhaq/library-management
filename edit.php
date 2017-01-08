@@ -29,6 +29,7 @@
 				  </label>
 				  <div class="controls controls-row">
 					<input class="span12" type="text" name="name" value="<?php echo $value; ?>"/>
+					<input type="hidden" value="<?php echo $id; ?>" name="id">
 				  </div>
 				</div>
 

@@ -5,39 +5,21 @@
 	<?php include 'navbar.php';?>	
 
 	<div class="main-container">
+	<div class="page-header">
+	  <?php 
 
-	<div class="row-fluid">
-		<div class="span8">
-		    <div class="widget">
-			<div class="widget-header">
-			  <div class="title">
-				<span class="fs1" aria-hidden="true" data-icon="&#xe14a;"></span>Add Author
-			  </div>
-			</div>
-			<div class="widget-body">
-			  <form action="newauthor.php" method="post" enctype="multipart/form-data" class="form-horizontal no-margin" data-toggle="validator">
-				<div class="control-group">
-				  <label class="control-label">
-					Author Name
-				  </label>
-				  <div class="controls controls-row">
-					<input class="span12" type="text" name="name" placeholder="Name" required/>
-				  </div>
-				</div>
+	    $sql_query="UPDATE lib_book_author SET author_name='$_POST[name]' WHERE tble_id='$_POST[id]' ";
+	  if(!mysqli_query($con,$sql_query))
+	  {
+		  die('<h1>Error: '.mysqli_error($con).'</h1>');
+	  }
+	  echo "<h1>User info updated</h1>";
+	  ?>
 
-                    <div class="form-actions no-margin">
-                      <button type="submit" class="btn btn-info pull-right">
-                        Add
-                      </button>
-                      <div class="clearfix">
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-
-		</div>
+	
+	
+	</div>
+	</div>	
 	</div>
 	</div>
 	<?php include 'footer.php';?>
